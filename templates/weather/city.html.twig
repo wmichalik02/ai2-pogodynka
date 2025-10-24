@@ -1,0 +1,43 @@
+{#{% extends 'base.html.twig' %}#}
+
+{# @var location \App\Entity\Location #}
+{# @var weather \App\Entity\Weather #}
+
+{#{% block title %}Weather in {{ location.city }}, {{ location.country }}{% endblock %}#}
+
+{#{% block body %}#}
+{#<main>#}
+{#    <h1>Weather in {{ location.city }}, {{ location.country }}</h1>#}
+
+{#    <ul>#}
+{#        {% for measurement in measurements %}#}
+{#            <li>{{ measurement.date|date('d.m.Y') }}: {{ measurement.celsius }}&deg;C</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#</main>#}
+{#{% endblock %}#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Weather in {{ location.city }}, {{ location.country }}{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>Weather in {{ location.city }}, {{ location.country }}</h1>
+
+        {% if measurements is empty %}
+            <p>No measurements for this location yet.</p>
+        {% else %}
+            <ul>
+                {% for m in measurements %}
+                    <li>
+                        {{ m.date|date('Y-m-d') }}:
+                        {{ m.celsius }} °C
+                        {% if m.windSpeed is not null %} | prędkość wiatru: {{ m.windSpeed }} {% endif %}
+                        {% if m.precipitation is not null %} | opady: {{ m.precipitation }} mm{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </main>
+{% endblock %}
