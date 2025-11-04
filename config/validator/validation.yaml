@@ -1,0 +1,28 @@
+App\Entity\Location:
+    properties:
+        city:
+            -   NotBlank: { groups: ['create'], message: "City name is required when creating a new location." }
+            -   Length: { min: 2, max: 255, groups: ['edit'], minMessage: "City name must have at least 2 characters long." }
+            -   Regex:
+                    pattern: '/^[A-Za-zÀ-ÿ\s-]+$/'
+                    message: "City name cannot contain numbers or special characters."
+                    groups: [ 'create', 'edit' ]
+        country:
+            - NotBlank: { groups: ['create', 'edit'], message: "Country is required." }
+        latitude:
+            - Range: { min: -90, max: 90, groups: ['create', 'edit'], notInRangeMessage: "Latitude must be between -90 and 90." }
+        longitude:
+            - Range: { min: -180, max: 180, groups: ['create', 'edit'], notInRangeMessage: "Longitude must be between -180 and 180." }
+
+App\Entity\Measurement:
+    properties:
+        date:
+            - NotBlank: { groups: ['create'], message: "Date is required when creating a measurement." }
+        celsius:
+            - Range: { min: -50, max: 60, groups: ['edit'], notInRangeMessage: "Temperature must be between -50°C and 60°C." }
+        windSpeed:
+            - Range: { min: 0, max: 50, groups: ['create'], notInRangeMessage: "Wind speed must be between 0 and 50 m/s." }
+        precipitation:
+            - Range: { min: 0, max: 500, groups: ['create', 'edit'], notInRangeMessage: "Precipitation must be between 0 and 500 mm." }
+        station:
+            - NotNull: { groups: ['create'], message: "Please select a weather station." }
